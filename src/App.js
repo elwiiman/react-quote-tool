@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "./components/Header";
+import Form from "./components/Form";
 import styled from "@emotion/styled";
 
 const Container = styled.div`
@@ -7,10 +8,18 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
+const FormContainer = styled.div`
+  background-color: #ffffff;
+  padding: 3rem;
+`;
+
 function App() {
   return (
     <Container>
-      <Header title={"Insurance Quote Tool"} />;
+      <Header title={"Insurance Quote Tool"} />
+      <FormContainer>
+        <Form />
+      </FormContainer>
     </Container>
   );
 }
