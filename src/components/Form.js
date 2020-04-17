@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
+import { obtainDiferenceBetweenYear } from "../helper";
 
 const Field = styled.div`
   display: flex;
@@ -41,12 +42,23 @@ const Button = styled.button`
   }
 `;
 
+const Error = styled.div`
+  background-color: red;
+  color: white;
+  padding: 1rem;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2rem;
+`;
+
 const Form = () => {
   const [data, setData] = useState({
     brand: "",
     year: "",
     plan: "",
   });
+
+  const [error, setError] = useState(false);
 
   //extract states values
 
@@ -58,8 +70,37 @@ const Form = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
+  //function to handle the sumbit of the form
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (brand.trim() === "" || year.trim() === "" || plan.trim() === "") {
+      setError(true);
+      return;
+    }
+
+    setError(false);
+
+    //base price of insurance
+    let result = 2000;
+
+    //obtain the year difference
+    const difference = obtainDiferenceBetweenYear(year);
+    console.log(difference);
+
+    // sustract per year 3% of the car value
+
+    result -= (difference * 3 * result) / 100;
+    console.log(result);
+    // each brand has an increment American 15%, Asian 5%, European 30%
+
+    //Basic 20%  Complete %50
+
+    //Total
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
+      {error ? <Error>Todos los campos son obligatorios</Error> : null}
       <Field>
         <Label>Brand</Label>
         <Select name="brand" value={brand} onChange={handleChange}>
@@ -105,7 +146,7 @@ const Form = () => {
         Complete
       </Field>
 
-      <Button>Quote</Button>
+      <Button type="submit">Quote</Button>
     </form>
   );
 };
