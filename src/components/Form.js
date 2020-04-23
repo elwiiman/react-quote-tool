@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { obtainDiferenceBetweenYear } from "../helper";
+import { obtainDiferenceBetweenYear, calcBrand, obtainPlan } from "../helper";
 
 const Field = styled.div`
   display: flex;
@@ -51,7 +51,7 @@ const Error = styled.div`
   margin-bottom: 2rem;
 `;
 
-const Form = () => {
+const Form = ({ setSummary }) => {
   const [data, setData] = useState({
     brand: "",
     year: "",
@@ -85,17 +85,24 @@ const Form = () => {
 
     //obtain the year difference
     const difference = obtainDiferenceBetweenYear(year);
-    console.log(difference);
 
     // sustract per year 3% of the car value
-
     result -= (difference * 3 * result) / 100;
-    console.log(result);
+
     // each brand has an increment American 15%, Asian 5%, European 30%
+    result = calcBrand(brand) * result;
 
     //Basic 20%  Complete %50
+    const incrementPlan = obtainPlan(plan);
 
     //Total
+    result = parseFloat(incrementPlan * result).toFixed(2);
+
+    //
+    setSummary({
+      quote: result,
+      data,
+    });
   };
 
   return (
