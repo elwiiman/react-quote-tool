@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Form from "./components/Form";
 import styled from "@emotion/styled";
 import Summary from "./components/Summary";
+import Result from "./components/Result";
 
 const Container = styled.div`
   max-width: 600px;
@@ -24,7 +25,7 @@ function App() {
     },
   });
 
-  const { data } = summary;
+  const { quote, data } = summary;
 
   return (
     <Container>
@@ -32,6 +33,7 @@ function App() {
       <FormContainer>
         <Form setSummary={setSummary} />
         <Summary data={data} />
+        <Result quote={quote} />
       </FormContainer>
     </Container>
   );
